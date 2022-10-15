@@ -4,12 +4,32 @@
 
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+<script>
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
+</script>
+<meta name="google-signin-client_id" content="477485091629-e2ob00cgi21n7t05e50aqjdvakt0s9kt.apps.googleusercontent.com">
   <body>
     <form action="?" method="POST">
       <div class="g-recaptcha" data-sitekey="6LeEB4IiAAAAADyFWirINsoMV_ULolflBRujS4US"></div>
       <br/>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
       <input type="submit" value="Submit">
+<a href="#" onclick="signOut();">Sign out</a>
+<script>
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+</script>
     </form>
   </body>
 </html>
